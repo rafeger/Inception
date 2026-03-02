@@ -4,3 +4,11 @@
 # **Description :**
 
 This project introducts the use of Docker.
+
+
+# ** Ressources :**
+
+git@github.com:rafeger/Inception.git :
+
+Good ressource to introduce the basics about Docker Compose, a mandatory part of the subject. 
+
