@@ -1,2 +1,6 @@
-# Inception
-This project aims to broaden your knowledge of system administration by using Docker. You will virtualize several Docker images, creating them in your new personal virtual machine.
+*This project has been created as part of the 42 curriculum by rafeger*
+
+ 
+# **Description :**
+
+This project introducts the use of Docker.
