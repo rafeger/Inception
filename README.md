@@ -8,7 +8,8 @@ This project introducts the use of Docker.
 
 # ** Ressources :**
 
-git@github.com:rafeger/Inception.git :
+https://www.geeksforgeeks.org/devops/docker-compose/ :
 
 Good ressource to introduce the basics about Docker Compose, a mandatory part of the subject. 
 
+	
