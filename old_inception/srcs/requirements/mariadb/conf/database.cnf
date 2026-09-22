@@ -1,0 +1,12 @@
+# mysqld (daemon of MariaDB/MySQL)
+[mysqld]
+# Define directory data (for bases files), it corresponds to the mount db_data
+datadir=/var/lib/mysql
+# socket to facilate communications between processess inside the container (so no TCP)
+socket=/run/mysqld/mysqld.sock
+# Expose 3306 listening port MySQL/MariaDB TCP
+port=3306
+# We instruct MariaDB to listen on all network interfaces, for instance to let other containers to connect on the DB
+bind_address=0.0.0.0
+# We set system user which execute mysqld, as mysql (to avoid launching the server as root)
+user=mysql

@@ -1,0 +1,73 @@
+# Docker-compose configuration file
+# If in docker files, we handle which software to install in an container environnement,
+# here we control the launch of multiples same types containers at the time, with just one command
+
+# docker inspect wordpress | grep Mounts -A 4 
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb
+    volumes:
+      - db_data:/var/lib/mysql
+    networks: 
+      - inception
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"] #execute this CMD to check health of MariaDB
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    restart: always
+    env_file:
+      - .env
+
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx #Image used for service must be constructed from the Dockerfile inside that folder
+    image: nginx
+    ports:
+      - "443:443"
+    depends_on:
+      - wordpress
+    restart: always
+    volumes:
+      - wp_data:/var/www/html #wp_data the volume mounted in the container | /var/lib/mysql the datadir of MariaDB
+    networks:
+      - inception # we rattach the service to Inception docker network
+
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    image: wordpress
+    depends_on:
+      - mariadb
+    volumes:
+      - wp_data:/var/www/html
+    networks:
+      - inception
+    restart: always
+    env_file:
+      - .env
+
+volumes:
+  db_data:
+    name: db_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/mariadb
+  wp_data:
+    name: wp_data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${USER}/data/wordpress
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
